@@ -8,6 +8,7 @@ const EditView = styled.textarea.attrs({
   autoComplete: false,
   spellCheck: false
 })`
+  font-size: 16px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   resize: none;
   border: none;
