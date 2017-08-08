@@ -10,14 +10,14 @@ const ErrorView = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  text-align: right;
 `;
 
 const EditView = styled.textarea.attrs({
   autoComplete: false,
   spellCheck: false
 })`
-  font-size: 16px;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font: inherit;
   background-color: inherit;
   color: inherit;
   resize: none;

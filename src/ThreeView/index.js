@@ -132,6 +132,9 @@ export default class ThreeView extends PureComponent {
 
     this._displayedObject = this.createGroupFor(parsedObject);
 
+    // TODO: Make this work properly
+    // this._displayedObject.rotateX(Math.PI);
+
     console.debug('adding object to scene...');
     this._scene.add(this._displayedObject);
 
