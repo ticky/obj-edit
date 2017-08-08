@@ -57,6 +57,14 @@ export default class ThreeView extends PureComponent {
     this._controls.dampingFactor = 0.25;
     this._controls.enableZoom = true;
 
+    // Load a texture
+    this._texture = new THREE.Texture();
+    this._imageLoader = new THREE.ImageLoader();
+    this._imageLoader.load(require('../examples/default.png'), (image) => {
+      this._texture.image = image;
+      this._texture.needsUpdate = true;
+    });
+
     // Load our OBJ file
     this._objLoader = new THREE.OBJLoader();
     this.updateObject(this.props.objData);
@@ -91,6 +99,15 @@ export default class ThreeView extends PureComponent {
       console.error('object is invalid');
       this.props.onError('Object\'s geometry is invalid.');
       return;
+    }
+
+    // Apply our texture to the object
+    if (this._texture) {
+      parsedObject.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.material.map = this._texture;
+        }
+      });
     }
 
     // Center the camera on the object, as long as the object works
