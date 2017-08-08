@@ -66,11 +66,7 @@ export default class ThreeView extends PureComponent {
 
     // Load a texture
     this._texture = new THREE.Texture();
-    this._imageLoader = new THREE.ImageLoader();
-    this._imageLoader.load(require('./examples/default.png'), (image) => {
-      this._texture.image = image;
-      this._texture.needsUpdate = true;
-    });
+    this.updateTexture(this.props.textureSrc);
 
     // Load our OBJ file
     this._objLoader = new THREE.OBJLoader();
@@ -79,6 +75,14 @@ export default class ThreeView extends PureComponent {
     container.appendChild(this._renderer.domElement);
 
     requestAnimationFrame(this.renderWebGL);
+  }
+
+  updateTexture(textureSrc) {
+    this._texture.image = new Image();
+    this._texture.image.src = textureSrc;
+    this._texture.image.onload = () => {
+      this._texture.needsUpdate = true;
+    };
   }
 
   updateObject(objData) {
@@ -151,6 +155,7 @@ export default class ThreeView extends PureComponent {
 
   componentWillUpdate(nextProps) {
     this.updateObject(nextProps.objData);
+    this.updateTexture(nextProps.textureSrc);
   }
 
   createGroupFor(object) {

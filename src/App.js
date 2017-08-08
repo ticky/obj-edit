@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import objData from './examples/default.js'
 import './App.css';
+
+import objData from './examples/default.js'
+import textureSrc from './examples/default.png';
 
 import EditView from './EditView';
 import ThreeView from './ThreeView';
@@ -19,19 +21,29 @@ const AppContainer = styled.div`
 
 export default class App extends PureComponent {
   state = {
-    objData
+    objData,
+    textureSrc
   };
 
   render() {
     return (
       <AppContainer>
-        <EditView value={this.state.objData} onChange={this.handleUpdate} />
-        <ThreeView objData={this.state.objData} />
+        <EditView
+          defaultValue={this.state.objData}
+          onChange={this.handleModelChange}
+          textureSrc={this.state.textureSrc}
+          onTextureChange={this.handleTextureChange}
+        />
+        <ThreeView objData={this.state.objData} textureSrc={this.state.textureSrc} />
       </AppContainer>
     );
   }
 
-  handleUpdate = (evt) => {
+  handleModelChange = (evt) => {
     this.setState({ objData: evt.target.value });
+  };
+
+  handleTextureChange = (textureSrc) => {
+    this.setState({ textureSrc });
   };
 }
