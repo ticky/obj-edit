@@ -71,7 +71,9 @@ export default class ThreeView extends PureComponent {
     try {
       parsedObject = this._objLoader.parse(objData);
     } catch (error) {
+      console.error(error);
       this.props.onError(error);
+      return;
     }
 
     if (this._displayedObject) {
