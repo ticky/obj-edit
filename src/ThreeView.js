@@ -118,6 +118,7 @@ export default class ThreeView extends PureComponent {
       parsedObject.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           child.material.map = this._texture;
+          child.material.side = THREE.DoubleSide;
         }
       });
     }
