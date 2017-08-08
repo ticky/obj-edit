@@ -87,6 +87,7 @@ export default class ThreeView extends PureComponent {
 
   updateObject(objData) {
     let parsedObject;
+    const flipping = true;
 
     console.debug('parsing supplied object...');
 
@@ -122,7 +123,13 @@ export default class ThreeView extends PureComponent {
     }
 
     // Center the camera on the object, as long as the object works
-    objectBounds.getCenter(this._controls.target);
+    const newBounds = objectBounds.getCenter();
+
+    if (flipping) {
+      newBounds.multiplyScalar(-1);
+    }
+
+    this._controls.target = newBounds;
 
     let lastObjectRadius;
 
@@ -143,8 +150,9 @@ export default class ThreeView extends PureComponent {
 
     this._displayedObject = this.createGroupFor(parsedObject);
 
-    // TODO: Make this work properly
-    // this._displayedObject.rotateX(Math.PI);
+    if (flipping) {
+      this._displayedObject.rotateX(Math.PI);
+    }
 
     console.debug('adding object to scene...');
     this._scene.add(this._displayedObject);
