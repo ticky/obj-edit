@@ -18,8 +18,12 @@ const EditView = styled.textarea.attrs({
 })`
   font-size: 16px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background-color: #333333;
+  color: #eeeeee;
   resize: none;
   border: none;
+  margin: 0;
+  padding: .5em;
 `;
 
 const AppContainer = styled.div`
