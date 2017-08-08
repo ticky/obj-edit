@@ -45,10 +45,6 @@ export default class ThreeView extends PureComponent {
     );
     this._camera.position.z = 10;
 
-    // Load our OBJ file
-    this._objLoader = new THREE.OBJLoader();
-    this.updateObject(this.props.objData);
-
     // Set up our renderer
     this._renderer = new THREE.WebGLRenderer();
     this._renderer.setSize(container.clientWidth, container.clientHeight);
@@ -59,6 +55,10 @@ export default class ThreeView extends PureComponent {
     this._controls.enableDamping = true;
     this._controls.dampingFactor = 0.25;
     this._controls.enableZoom = true;
+
+    // Load our OBJ file
+    this._objLoader = new THREE.OBJLoader();
+    this.updateObject(this.props.objData);
 
     container.appendChild(this._renderer.domElement);
 
