@@ -60,7 +60,7 @@ export default class ThreeView extends PureComponent {
     // Load a texture
     this._texture = new THREE.Texture();
     this._imageLoader = new THREE.ImageLoader();
-    this._imageLoader.load(require('../examples/default.png'), (image) => {
+    this._imageLoader.load(require('./examples/default.png'), (image) => {
       this._texture.image = image;
       this._texture.needsUpdate = true;
     });
