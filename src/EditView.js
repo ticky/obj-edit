@@ -16,11 +16,6 @@ const EditField = styled.textarea.attrs({
   padding: .5em;
 `;
 
-const EditFieldWrapper = styled.div`
-  display: flex;
-  flex: 1 0 auto;
-`;
-
 export default class EditView extends PureComponent {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -47,8 +42,22 @@ export default class EditView extends PureComponent {
         <div style={{ flex: '0 0 auto', display: 'flex', paddingLeft: '.5em', borderTop: '1px solid grey' }}>
           <label style={{ flex: '1 0 auto', display: 'flex', alignItems: 'center' }}>
             Texture
-            <img style={{ margin: '1em', width: '2em', height: '2em', flex: 'none' }} src={this.props.textureSrc} />
-            <input type="file" accept="image/*" style={{ flex: '1 0 auto' }} onChange={this.handleFileChange} />
+            <img
+              alt="Texture Preview"
+              style={{
+                margin: '1em',
+                width: '2em',
+                height: '2em',
+                flex: 'none'
+              }}
+              src={this.props.textureSrc}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ flex: '1 0 auto' }}
+              onChange={this.handleFileChange}
+            />
           </label>
         </div>
       </div>
