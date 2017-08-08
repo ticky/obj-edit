@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Detector from 'three/examples/js/Detector.js';
+import styled from 'styled-components';
 
+import Detector from 'three/examples/js/Detector.js';
 // These add-ons need a global THREE defined to load
 // I guess that's useful for debugging anyway, lol
 const THREE = window.THREE = require('three');
@@ -9,17 +10,23 @@ require('three/examples/js/controls/OrbitControls.js');
 require('three/examples/js/loaders/MTLLoader.js');
 require('three/examples/js/loaders/OBJLoader.js');
 
+const ErrorView = styled.div`
+  position: absolute;
+  padding: .5em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: right;
+`;
+
 export default class ThreeView extends PureComponent {
   static propTypes = {
-    objData: PropTypes.string.isRequired,
-    onSuccess: PropTypes.func.isRequired,
-    onError: PropTypes.func.isRequired
+    objData: PropTypes.string.isRequired
   };
 
-  static defaultProps = {
-    onSuccess() {},
-    onError() {}
-  }
+  state = {
+    error: null
+  };
 
   componentDidMount() {
     const container = this._container;
@@ -84,7 +91,7 @@ export default class ThreeView extends PureComponent {
       console.debug('object parsed...');
     } catch (error) {
       console.error('failed to parse object', error);
-      this.props.onError(error);
+      this.setState({ error });
       return;
     }
 
@@ -97,7 +104,7 @@ export default class ThreeView extends PureComponent {
 
     if (isNaN(newObjectRadius)) {
       console.error('object is invalid');
-      this.props.onError('Object\'s geometry is invalid.');
+      this.setState({ error: 'Object\'s geometry is invalid.' });
       return;
     }
 
@@ -138,7 +145,7 @@ export default class ThreeView extends PureComponent {
     console.debug('adding object to scene...');
     this._scene.add(this._displayedObject);
 
-    this.props.onSuccess();
+    this.setState({ error: null });
     console.debug('done.');
   }
 
@@ -180,6 +187,14 @@ export default class ThreeView extends PureComponent {
   };
 
   render() {
-    return <div ref={(div) => this._container = div} />;
+    return (
+      <div ref={(div) => this._container = div}>
+        {this.state.error && (
+          <ErrorView>
+            {this.state.error.toString()}
+          </ErrorView>
+        )}
+      </div>
+    );
   }
 }
