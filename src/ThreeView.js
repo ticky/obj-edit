@@ -66,6 +66,8 @@ export default class ThreeView extends PureComponent {
 
     // Load a texture
     this._texture = new THREE.Texture();
+    this._texture.magFilter = THREE.NearestFilter;
+    this._texture.minFilter = THREE.LinearFilter;
     this.updateTexture(this.props.textureSrc);
 
     // Load our OBJ file
