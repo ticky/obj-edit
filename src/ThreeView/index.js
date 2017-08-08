@@ -68,23 +68,57 @@ export default class ThreeView extends PureComponent {
   updateObject(objData) {
     let parsedObject;
 
+    console.debug('parsing supplied object...');
+
     try {
       parsedObject = this._objLoader.parse(objData);
+      console.debug('object parsed...');
     } catch (error) {
-      console.error(error);
+      console.error('failed to parse object', error);
       this.props.onError(error);
       return;
     }
 
+    console.debug('updating camera...');
+    // Check the object is valid
+    const objectBounds = new THREE.Box3();
+    objectBounds.setFromObject(parsedObject);
+    const objectSphere = objectBounds.getBoundingSphere();
+    const newObjectRadius = objectSphere.radius;
+
+    if (isNaN(newObjectRadius)) {
+      console.error('object is invalid');
+      this.props.onError('Object\'s geometry is invalid.');
+      return;
+    }
+
+    // Center the camera on the object, as long as the object works
+    objectBounds.getCenter(this._controls.target);
+
+    let lastObjectRadius;
+
     if (this._displayedObject) {
+      console.debug('removing existing object...');
+      const lastObjectBox = new THREE.Box3();
+      // We need to pull this from the *first* child
+      lastObjectBox.setFromObject(this._displayedObject.children.shift());
+      lastObjectRadius = lastObjectBox.getBoundingSphere().radius;
+
       this._scene.remove(this._displayedObject);
+    }
+
+    if (lastObjectRadius !== undefined) {
+      console.debug(`offsetting camera by ${newObjectRadius / lastObjectRadius}×...`);
+      this._camera.position.multiplyScalar(newObjectRadius / lastObjectRadius);
     }
 
     this._displayedObject = this.createGroupFor(parsedObject);
 
+    console.debug('adding object to scene...');
     this._scene.add(this._displayedObject);
 
     this.props.onSuccess();
+    console.debug('done.');
   }
 
   componentWillUpdate(nextProps) {
