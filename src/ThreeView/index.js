@@ -47,6 +47,7 @@ export default class ThreeView extends PureComponent {
 
     // Set up our renderer
     this._renderer = new THREE.WebGLRenderer();
+    this._renderer.setPixelRatio(window.devicePixelRatio);
     this._renderer.setSize(container.clientWidth, container.clientHeight);
     this._renderer.setClearColor(0x333333);
 
