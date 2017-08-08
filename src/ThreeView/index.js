@@ -148,8 +148,8 @@ export default class ThreeView extends PureComponent {
     console.debug('resized');
     const container = this._container;
 
-    // TODO: Update camera for resized viewport
-    // this._camera.aspect = container.clientWidth / container.clientHeight;
+    this._camera.aspect = container.clientWidth / container.clientHeight;
+    this._camera.updateProjectionMatrix();
     this._renderer.setSize(container.clientWidth, container.clientHeight);
   };
 
