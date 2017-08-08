@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import objData from './examples/default.js'
 import './App.css';
 
+import EditView from './EditView';
 import ThreeView from './ThreeView';
 
 const AppContainer = styled.div`
@@ -14,19 +15,6 @@ const AppContainer = styled.div`
   > * {
     flex: 1 0 50%;
   }
-`;
-
-const EditView = styled.textarea.attrs({
-  autoComplete: false,
-  spellCheck: false
-})`
-  font: inherit;
-  background-color: inherit;
-  color: inherit;
-  resize: none;
-  border: none;
-  margin: 0;
-  padding: .5em;
 `;
 
 export default class App extends PureComponent {
