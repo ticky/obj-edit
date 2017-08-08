@@ -4,6 +4,14 @@ import './App.css';
 
 import ThreeView from './ThreeView';
 
+const ErrorView = styled.div`
+  position: absolute;
+  padding: .5em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
 const EditView = styled.textarea.attrs({
   autoComplete: false,
   spellCheck: false
@@ -173,12 +181,19 @@ export default class App extends PureComponent {
   render() {
     return (
       <AppContainer>
+        {this.state.error && (
+          <ErrorView>
+            {this.state.error.toString()}
+          </ErrorView>
+        )}
         <EditView
           value={this.state.objData}
           onChange={this.handleUpdate}
         />
         <ThreeView
           objData={this.state.objData}
+          onSuccess={this.handleSuccess}
+          onError={this.handleError}
         />
       </AppContainer>
     );
@@ -186,5 +201,13 @@ export default class App extends PureComponent {
 
   handleUpdate = (evt) => {
     this.setState({ objData: evt.target.value });
-  }
+  };
+
+  handleSuccess = () => {
+    this.setState({ error: null });
+  };
+
+  handleError = (error) => {
+    this.setState({ error });
+  };
 }
