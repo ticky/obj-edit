@@ -6,8 +6,8 @@
   "dependencies": {
     "gh-pages": "1.0.0",
     "prop-types": "15.5.10",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "react-scripts": "1.0.10",
     "styled-components": "2.1.2",
     "three": "0.86.0"
