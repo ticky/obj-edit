@@ -10,7 +10,7 @@
     "react-dom": "16.8.6",
     "react-scripts": "2.1.8",
     "styled-components": "4.3.2",
-    "three": "0.104.0"
+    "three": "0.106.2"
   },
   "scripts": {
     "predeploy": "yarn build",
